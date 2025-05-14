@@ -31,6 +31,7 @@ namespace PadroesProjeto
             //builder.Services.AddSingleton<ContaCorrente>(); 
             #endregion
 
+            #region Abstract Method
             //IConta contaCorrente = new ContaCorrente();
             //IConta contaPoupanca = new ContaPoupanca();
             //IConta contaInvestimento = new ContaInvestimento();
@@ -38,16 +39,16 @@ namespace PadroesProjeto
 
 
             Console.WriteLine(@"Selecione a conta que deseja usar: \n
-            1 - Conta Corrente \n
-            2 - Conta Poupança \n
-            3 - Conta Investimento \n
-            4 - Conta Internacional \n
+            1 - Conta Corrente
+            2 - Conta Poupança
+            3 - Conta Investimento
+            4 - Conta Internacional
             ");
 
             var opcaoSelecionada = Console.ReadLine();
 
             IConta contaSelecionada = FabricaContas.CriarConta(opcaoSelecionada);
-            contaSelecionada.Transferir(1000, "123456");            
+            contaSelecionada.Transferir(1000, "123456");
 
             //if (opcaoSelecionada == "1")
             //{
@@ -68,7 +69,41 @@ namespace PadroesProjeto
             //else
             //{
             //    Console.WriteLine("Opção inválida.");
-            //}
+            //} 
+            #endregion
+
+            #region Builder
+
+            var notebook = new Notebook();
+            var notebookBuilder = new NotebookBuilder(notebook);
+            notebookBuilder.BuildModel("Dell Inspiron 15");
+            notebookBuilder.BuildProcessor(new IntelProcessor
+            {
+                Model = "i7",
+                Speed = 3
+            });
+            var notebookFinal = notebookBuilder.GetNotebook();
+
+
+            #endregion
+
+            Notebook notebook2 = new Notebook();
+            notebook2.Model = "Dell Inspiron 15";
+            notebook2.Processor = new IntelProcessor
+            {
+                Model = "i7",
+                Speed = 3
+            };
+
+            //Notebook notebook3 = notebook2;
+            //notebook3.Model = "Dell Inspiron 17";
+
+            //Console.WriteLine($"Notebook 2: {notebook2.Model}");
+
+            Notebook notebook4 = notebook2.Clone();
+            notebook4.Model = "Dell Inspiron 18";
+            Console.WriteLine($"Notebook 2: {notebook2.Model}");
+            Console.WriteLine($"Notebook 4: {notebook4.Model}");
         }
     }
 }
